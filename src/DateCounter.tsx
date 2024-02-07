@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
+
+function reducer(state: any, action: any) {
+  return state + action;
+}
 
 const DateCounter: React.FC = () => {
-  const [count, setCount] = useState<number>(0);
+  // const [count, setCount] = useState<number>(0);
+  const [count, dispatch] = useReducer(reducer, 0);
   const [step, setStep] = useState<number>(1);
 
   // This mutates the date object.
@@ -9,15 +14,17 @@ const DateCounter: React.FC = () => {
   date.setDate(date.getDate() + count);
 
   const dec = (): void => {
-    setCount((prevCount) => prevCount - step);
+    // setCount((prevCount) => prevCount - step);
+    dispatch(-1);
   };
 
   const inc = (): void => {
-    setCount((prevCount) => prevCount + step);
+    // setCount((prevCount) => prevCount + step);
+    dispatch(+1);
   };
 
   const defineCount = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setCount(Number(e.target.value));
+    // setCount(Number(e.target.value));
   };
 
   const defineStep = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -25,7 +32,7 @@ const DateCounter: React.FC = () => {
   };
 
   const reset = (): void => {
-    setCount(0);
+    // setCount(0);
     setStep(1);
   };
 
