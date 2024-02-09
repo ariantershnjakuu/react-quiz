@@ -1,7 +1,9 @@
 import React, { useState, useReducer } from "react";
 
 function reducer(state: any, action: any) {
-  return state + action;
+  if (action.type === "inc") return state + 1;
+  if (action.type === "dec") return state - 1;
+  if (action.type === "setCount") return action.payload;
 }
 
 const DateCounter: React.FC = () => {
@@ -13,17 +15,18 @@ const DateCounter: React.FC = () => {
   const date = new Date("June 21 2027");
   date.setDate(date.getDate() + count);
 
-  const dec = (): void => {
+  const dec = () => {
     // setCount((prevCount) => prevCount - step);
-    dispatch(-1);
+    dispatch({ type: "dec" });
   };
 
-  const inc = (): void => {
+  const inc = () => {
     // setCount((prevCount) => prevCount + step);
-    dispatch(+1);
+    dispatch({ type: "inc" });
   };
 
   const defineCount = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    dispatch({ type: "setCount", payload: Number(e.target.value) });
     // setCount(Number(e.target.value));
   };
 
