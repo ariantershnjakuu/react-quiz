@@ -1,42 +1,53 @@
-import React, { useState, useReducer } from "react";
+import React, { useReducer } from "react";
+
+const initialState = { count: 0, step: 1 };
 
 function reducer(state: any, action: any) {
-  if (action.type === "inc") return state + 1;
-  if (action.type === "dec") return state - 1;
-  if (action.type === "setCount") return action.payload;
+  console.log(state, action);
+  switch (action.type) {
+    case "inc":
+      return { ...state, count: state.count + state.step };
+    case "dec":
+      return { ...state, count: state.count - state.step };
+    case "setCount":
+      return { ...state, count: action.payload };
+    case "setStep":
+      return { ...state, step: action.payload };
+    case "reset":
+      return initialState;
+    default:
+      throw new Error("Invalid action type.");
+  }
 }
 
 const DateCounter: React.FC = () => {
-  // const [count, setCount] = useState<number>(0);
-  const [count, dispatch] = useReducer(reducer, 0);
-  const [step, setStep] = useState<number>(1);
+  const initialState = { count: 0, step: 1 };
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const { count, step } = state;
 
   // This mutates the date object.
   const date = new Date("June 21 2027");
   date.setDate(date.getDate() + count);
 
   const dec = () => {
-    // setCount((prevCount) => prevCount - step);
     dispatch({ type: "dec" });
   };
 
   const inc = () => {
-    // setCount((prevCount) => prevCount + step);
     dispatch({ type: "inc" });
   };
 
   const defineCount = (e: React.ChangeEvent<HTMLInputElement>): void => {
     dispatch({ type: "setCount", payload: Number(e.target.value) });
-    // setCount(Number(e.target.value));
   };
 
   const defineStep = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setStep(Number(e.target.value));
+    dispatch({ type: "setStep", payload: Number(e.target.value) });
   };
 
   const reset = (): void => {
-    // setCount(0);
-    setStep(1);
+    dispatch({ type: "reset" });
   };
 
   return (
