@@ -1,6 +1,6 @@
 interface ErrorProps {}
 
-const Error: React.FC<ErrorProps> = () => {
+const Errors: React.FC<ErrorProps> = () => {
   return (
     <p className="error">
       <span>💥</span> There was an error fecthing questions.
@@ -8,4 +8,4 @@ const Error: React.FC<ErrorProps> = () => {
   );
 };
 
-export default Error;
+export default Errors;
