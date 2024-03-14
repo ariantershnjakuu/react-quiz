@@ -48,6 +48,19 @@ const reducer = (state: any, action: any) => {
         highscore:
           state.points > state.highscore ? state.points : state.highscore,
       };
+    case "restart":
+      return {
+        ...initialState,
+        question: state.question,
+      };
+    // return {
+    //   ...state,
+    //   index: 0,
+    //   answer: null,
+    //   points: 0,
+    //   status: "ready",
+    //   highscore: 0,
+    // };
     default:
       throw new Error("Invalid action");
   }
@@ -107,6 +120,7 @@ function App() {
         )}
         {status === "finished" && (
           <FinishScreen
+            dispatch={dispatch}
             points={points}
             maxPossiblePoints={maxPossiblePoints}
             highscore={highscore}

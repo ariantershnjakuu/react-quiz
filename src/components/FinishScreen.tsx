@@ -2,12 +2,14 @@ interface FinishScreenProps {
   points: number;
   maxPossiblePoints: number;
   highscore: number;
+  dispatch: any;
 }
 
 const FinishScreen: React.FC<FinishScreenProps> = ({
   points,
   maxPossiblePoints,
   highscore,
+  dispatch,
 }) => {
   const mathPercentage = (points / maxPossiblePoints) * 100;
   let emoji;
@@ -25,6 +27,12 @@ const FinishScreen: React.FC<FinishScreenProps> = ({
         {maxPossiblePoints} {Math.ceil(mathPercentage)}%.
       </p>
       <p className="highscore">(Highscore: {highscore} points)</p>
+      <button
+        className="btn btn-ui"
+        onClick={() => dispatch({ type: "restart" })}
+      >
+        Restart quiz
+      </button>
     </>
   );
 };
